@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skillistan — Build, Learn & Hire</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav" id="navbar">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Skillistan</a>
+      <ul class="nav-links">
+        <li><a href="#" class="nav-link active">Home</a></li>
+        <li><a href="#" class="nav-link">Courses</a></li>
+        <li><a href="#" class="nav-link">Services</a></li>
+        <li><a href="#" class="nav-link">About Us</a></li>
+      </ul>
+      <div class="nav-right">
+        <!-- THEME TOGGLE -->
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="theme-icon sun">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </span>
+          <span class="theme-icon moon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+          </span>
+          <span class="toggle-knob"></span>
+        </button>
+        <a href="#" class="btn-ghost">Sign In</a>
+        <a href="#" class="btn-primary">Hire Talent</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-inner">
+      <span class="hero-badge">THE NEXUS ECOSYSTEM</span>
+      <h1 class="hero-title">
+        Build, Learn &amp; Hire —<br/>
+        <span class="hero-accent">All in One Place</span>
+      </h1>
+      <p class="hero-sub">Access a curated marketplace of elite blockchain developers, immersive high-tech courses, and visionary services designed for the future of work.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn-primary btn-lg">Get Started <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+        <a href="#" class="btn-outline btn-lg">Explore Academy</a>
+      </div>
+      <div class="hero-search-wrap">
+        <div class="hero-tabs">
+          <button class="hero-tab active">Services</button>
+          <button class="hero-tab">Courses</button>
+        </div>
+        <div class="hero-search">
+          <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" placeholder="Search for Smart Contract Audit, Zk-Rollup Specialist..." />
+          <button class="btn-primary">Search</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section categories-section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Explore Categories</h2>
+          <p class="section-sub">Navigate the specialized nodes of our network</p>
+        </div>
+        <a href="#" class="view-all">View All <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="categories-grid">
+        <div class="cat-card">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg></div>
+          <h3>App Development</h3>
+          <p>Custom layer-1 and layer-2 solutions for enterprise scale and speed.</p>
+          <span class="cat-count">128 SPECIALISTS</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Web Development</h3>
+          <p>Advanced smart contract auditing and formal verification services.</p>
+          <span class="cat-count">84 SPECIALISTS</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+          <h3>AI Integration & Automation</h3>
+          <p>Neural network deployment and custom LLM training for automation.</p>
+          <span class="cat-count">216 SPECIALISTS</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>
+          <h3>Digital Designs</h3>
+          <p>Futuristic UI/UX and motion graphics for web3 applications.</p>
+          <span class="cat-count">190 SPECIALISTS</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <h3>SEO</h3>
+          <p>Skill-up with industry-leading courses on emerging technologies.</p>
+          <span class="cat-count">42 COURSES</span>
+        </div>
+        <div class="cat-card">
+          <div class="cat-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 20V10M12 20V4M6 20v-6"/></svg></div>
+          <h3>3D Video Editiing</h3>
+          <p>Decentralized hosting, node management, and cloud orchestration.</p>
+          <span class="cat-count">67 SPECIALISTS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TALENT -->
+  <section class="section talent-section">
+    <div class="container">
+      <div class="section-header centered">
+        <h2 class="section-title">Elite Marketplace Talent</h2>
+        <p class="section-sub">Collaborate with top-vetted developers and architects who are building the backbone of tomorrow.</p>
+      </div>
+      <div class="talent-grid">
+        <div class="talent-card">
+          <div class="talent-avatar" style="background: linear-gradient(135deg,#1a6b5a,#0d3d31)">
+            <span>MV</span>
+            <span class="online-dot"></span>
+          </div>
+          <h4>Marcus V.</h4>
+          <span class="talent-role">BLOCKCHAIN ENG.</span>
+          <div class="talent-stars">★ 5.0 <span>(24)</span></div>
+          <div class="talent-tags"><span>SOLANA</span><span>ETHEREUM</span><span>NEAR</span></div>
+          <a href="#" class="btn-outline-sm">View Profile</a>
+        </div>
+        <div class="talent-card">
+          <div class="talent-avatar" style="background: linear-gradient(135deg,#2d4a6b,#1a2d47)">
+            <span>EK</span>
+            <span class="online-dot"></span>
+          </div>
+          <h4>Elena K.</h4>
+          <span class="talent-role">PRODUCT DESIGNER</span>
+          <div class="talent-stars">★ 4.9 <span>(196)</span></div>
+          <div class="talent-tags"><span>FIGMA</span><span>MOTION</span><span>R3F</span></div>
+          <a href="#" class="btn-outline-sm">View Profile</a>
+        </div>
+        <div class="talent-card">
+          <div class="talent-avatar" style="background: linear-gradient(135deg,#4a2d6b,#2d1a47)">
+            <span>JW</span>
+            <span class="online-dot"></span>
+          </div>
+          <h4>Jin W.</h4>
+          <span class="talent-role">MACHINE LEARNING ENG.</span>
+          <div class="talent-stars">★ 5.0 <span>(310)</span></div>
+          <div class="talent-tags"><span>PYTORCH</span><span>LLMS</span><span>NLP</span></div>
+          <a href="#" class="btn-outline-sm">View Profile</a>
+        </div>
+        <div class="talent-card">
+          <div class="talent-avatar" style="background: linear-gradient(135deg,#6b3a2d,#47221a)">
+            <span>SL</span>
+            <span class="online-dot"></span>
+          </div>
+          <h4>Sarah L.</h4>
+          <span class="talent-role">SECURITY AUDITOR</span>
+          <div class="talent-stars">★ 4.8 <span>(156)</span></div>
+          <div class="talent-tags"><span>SOLIDITY</span><span>ZKP</span><span>MVX</span></div>
+          <a href="#" class="btn-outline-sm">View Profile</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCROLL STACK — Master the Digital Frontier -->
+  <section class="section courses-section" id="coursesSection">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Master the Digital Frontier</h2>
+          <p class="section-sub">Intensive, project-based courses taught by industry veterans. Learn the skills that command premium rates.</p>
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-btn" id="prevBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          </button>
+          <button class="carousel-btn" id="nextBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- SCROLL STACK WRAPPER -->
+      <div class="scroll-stack-scroller" id="scrollStack">
+        <div class="scroll-stack-inner">
+
+          <div class="scroll-stack-card card-1">
+            <div class="course-card-inner">
+              <div class="course-img-wrap">
+                <div class="course-img course-img-1"></div>
+                <span class="course-badge">BESTSELLER</span>
+              </div>
+              <div class="course-info">
+                <h3>Master Cross Platform App Development</h3>
+                <div class="course-instructor">
+                  <div class="instr-av">AR</div>
+                  <span>Ahmad Asif</span>
+                </div>
+                <div class="course-meta">
+                  <span class="course-level">Advanced Curriculum</span>
+                  <span class="course-fill">95% Full</span>
+                </div>
+                <div class="course-progress"><div class="progress-bar" style="width:95%"></div></div>
+                <div class="course-footer">
+                  <span class="course-price">$200</span>
+                  <a href="#" class="btn-enroll">Enroll Now <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="scroll-stack-card card-2">
+            <div class="course-card-inner">
+              <div class="course-img-wrap">
+                <div class="course-img course-img-2"></div>
+                <span class="course-badge badge-inter">INTERMEDIATE</span>
+              </div>
+              <div class="course-info">
+                <h3>Web Development</h3>
+                <div class="course-instructor">
+                  <div class="instr-av">SC</div>
+                  <span>Xyz Sir</span>
+                </div>
+                <div class="course-meta">
+                  <span class="course-level">Intermediate</span>
+                  <span class="course-fill">62% Full</span>
+                </div>
+                <div class="course-progress"><div class="progress-bar" style="width:62%"></div></div>
+                <div class="course-footer">
+                  <span class="course-price">$899</span>
+                  <a href="#" class="btn-enroll">Enroll Now <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="scroll-stack-card card-3">
+            <div class="course-card-inner">
+              <div class="course-img-wrap">
+                <div class="course-img course-img-3"></div>
+                <span class="course-badge badge-design">DESIGN FOCUS</span>
+              </div>
+              <div class="course-info">
+                <h3>Future UI: Designing the Next-Gen Internet</h3>
+                <div class="course-instructor">
+                  <div class="instr-av">LT</div>
+                  <span>Sir HAseeb</span>
+                </div>
+                <div class="course-meta">
+                  <span class="course-level">Design Focus</span>
+                  <span class="course-fill">30% Full</span>
+                </div>
+                <div class="course-progress"><div class="progress-bar" style="width:30%"></div></div>
+                <div class="course-footer">
+                  <span class="course-price">$599</span>
+                  <a href="#" class="btn-enroll">Enroll Now <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="scroll-stack-end"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROTOCOL -->
+  <section class="section protocol-section">
+    <div class="container">
+      <div class="section-header centered">
+        <h2 class="section-title">The Skillistan Protocol</h2>
+        <p class="section-sub">Three steps to hyper-efficient scaling and learning.</p>
+      </div>
+      <div class="protocol-grid">
+        <div class="protocol-step">
+          <div class="protocol-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <span class="step-num">1.</span>
+          <h3>Discover</h3>
+          <p>Identify the exact talent or course needed using our AI-powered Nexus search engine.</p>
+        </div>
+        <div class="protocol-connector"></div>
+        <div class="protocol-step">
+          <div class="protocol-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <span class="step-num">2.</span>
+          <h3>Collaborate</h3>
+          <p>Secure agreements via smart contracts and start working in our immersive virtual workspaces.</p>
+        </div>
+        <div class="protocol-connector"></div>
+        <div class="protocol-step">
+          <div class="protocol-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <span class="step-num">3.</span>
+          <h3>Evolve</h3>
+          <p>Complete projects, earn verified credentials, and climb the global Skillistan leaderboard.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section class="cta-section">
+    <div class="cta-orb cta-orb-1"></div>
+    <div class="cta-orb cta-orb-2"></div>
+    <div class="container">
+      <div class="cta-inner">
+        <h2>Ready to Level Up?</h2>
+        <p>Join 10,000+ elite builders and innovators shaping the next generation of the internet.</p>
+        <div class="cta-btns">
+          <a href="#" class="btn-primary btn-lg">Create Account</a>
+          <a href="#" class="btn-ghost btn-lg">Talk to Sales</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <span class="nav-logo">Skillistan</span>
+        <span class="footer-copy">© 2024 Skillistan Nexus. Built for the future of work.</span>
+      </div>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Cookie Settings</a>
+        <a href="#">Global Nodes</a>
+      </div>
+      <div class="footer-socials">
+        <a href="#" class="social-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+        </a>
+        <a href="#" class="social-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        </a>
+        <a href="#" class="social-icon">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/scrollstack.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
