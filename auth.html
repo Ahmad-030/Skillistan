@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skillistan — Sign In / Join</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700;800&family=Satoshi:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #00e5a0;
+      --accent-dim: rgba(0,229,160,0.12);
+      --accent-glow: rgba(0,229,160,0.28);
+      --radius-card: 20px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    [data-theme="dark"] {
+      --bg: #080c10;--bg-2: #0d1318;--bg-3: #131b23;--bg-card: #0f1820;
+      --border: rgba(255,255,255,0.07);--border-hover: rgba(0,229,160,0.35);
+      --text: #e8f0f8;--text-2: #8a9db5;--text-3: #4a5a70;
+      --nav-bg: rgba(8,12,16,0.85);--shadow-card: 0 8px 48px rgba(0,0,0,0.55);
+      --glow: 0 0 60px rgba(0,229,160,0.1);--input-bg: rgba(255,255,255,0.04);
+    }
+    [data-theme="light"] {
+      --bg: #f4f7fb;--bg-2: #edf1f7;--bg-3: #e4eaf4;--bg-card: #ffffff;
+      --border: rgba(0,0,0,0.08);--border-hover: rgba(0,180,120,0.5);
+      --text: #0d1a2a;--text-2: #4a5a70;--text-3: #9aabb8;
+      --nav-bg: rgba(244,247,251,0.9);--shadow-card: 0 8px 40px rgba(0,0,0,0.1);
+      --glow: 0 0 60px rgba(0,160,100,0.08);--input-bg: rgba(0,0,0,0.03);
+      --accent: hsl(160,100%,36%);--accent-dim: rgba(0,184,122,0.1);--accent-glow: rgba(0,184,122,0.2);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{font-size:16px;scroll-behavior:smooth}
+    body{font-family:'Satoshi',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;transition:background var(--transition),color var(--transition);}
+    a{text-decoration:none;color:inherit}
+    h1,h2,h3,h4,h5{font-family:'Clash Display',sans-serif;font-weight:700;line-height:1.15}
+
+    .nav{position:fixed;top:0;left:0;right:0;z-index:1000;background:var(--nav-bg);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);transition:background var(--transition),border-color var(--transition);}
+    .nav-inner{max-width:1180px;margin:0 auto;padding:0 2rem;display:flex;align-items:center;gap:2rem;height:62px;}
+    .nav-logo{font-family:'Clash Display',sans-serif;font-weight:800;font-size:1.2rem;color:var(--text);letter-spacing:-0.5px;flex-shrink:0;}
+    .nav-links{display:flex;align-items:center;gap:0.25rem;flex:1;}
+    .nav-link{font-family:'Satoshi',sans-serif;font-size:0.875rem;font-weight:500;color:var(--text-2);padding:6px 12px;border-radius:7px;transition:all var(--transition);}
+    .nav-link:hover{color:var(--text);}
+    .nav-right{display:flex;align-items:center;gap:10px;margin-left:auto;}
+    .btn-primary{display:inline-flex;align-items:center;gap:7px;background:var(--accent);color:#04100a;font-family:'Clash Display',sans-serif;font-weight:700;font-size:0.875rem;padding:10px 22px;border-radius:8px;border:none;cursor:pointer;transition:all var(--transition);white-space:nowrap;}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 24px var(--accent-glow);}
+    .btn-ghost{display:inline-flex;align-items:center;gap:7px;background:transparent;color:var(--text-2);font-family:'Satoshi',sans-serif;font-weight:500;font-size:0.875rem;padding:10px 18px;border-radius:8px;border:none;cursor:pointer;transition:color var(--transition);}
+    .btn-ghost:hover{color:var(--text);}
+    .theme-toggle{position:relative;width:58px;height:30px;background:var(--bg-3);border:1.5px solid var(--border);border-radius:15px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;padding:0 6px;transition:all var(--transition);flex-shrink:0;}
+    .theme-toggle:hover{border-color:var(--accent);}
+    .theme-icon{display:flex;align-items:center;justify-content:center;width:18px;height:18px;z-index:1;position:relative;color:var(--text-2);transition:color var(--transition);}
+    .toggle-knob{position:absolute;width:22px;height:22px;background:var(--accent);border-radius:50%;transition:transform var(--transition);left:4px;box-shadow:0 2px 8px var(--accent-glow);}
+    [data-theme="light"] .toggle-knob{transform:translateX(28px);}
+    [data-theme="dark"] .theme-icon.moon{color:var(--accent);}
+    [data-theme="light"] .theme-icon.sun{color:var(--accent);}
+
+    .page-wrap{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;}
+    .left-panel{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:100px 64px 80px;background:var(--bg-2);border-right:1px solid var(--border);}
+    .panel-orb{position:absolute;border-radius:50%;pointer-events:none;filter:blur(80px);}
+    .orb-1{width:500px;height:500px;top:-150px;right:-150px;background:radial-gradient(circle,rgba(0,229,160,0.15),transparent 70%);}
+    .orb-2{width:350px;height:350px;bottom:-100px;left:-80px;background:radial-gradient(circle,rgba(0,100,255,0.1),transparent 70%);}
+    .grid-overlay{position:absolute;inset:0;z-index:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:50px 50px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black,transparent);}
+    .left-content{position:relative;z-index:1;}
+    .panel-badge{display:inline-block;font-family:'Satoshi',sans-serif;font-size:0.68rem;font-weight:600;letter-spacing:1.5px;color:var(--accent);background:var(--accent-dim);border:1px solid var(--accent-glow);padding:5px 14px;border-radius:20px;margin-bottom:28px;}
+    .panel-title{font-size:clamp(1.8rem,3vw,2.8rem);font-weight:800;color:var(--text);letter-spacing:-1px;margin-bottom:16px;line-height:1.1;}
+    .panel-title span{color:var(--accent);}
+    .panel-sub{font-size:0.95rem;color:var(--text-2);line-height:1.7;margin-bottom:44px;max-width:380px;}
+    .stats-row{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-bottom:40px;}
+    .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;transition:all var(--transition);}
+    .stat-card:hover{border-color:var(--border-hover);transform:translateY(-2px);}
+    .stat-val{font-family:'Clash Display',sans-serif;font-size:1.6rem;font-weight:800;color:var(--accent);letter-spacing:-0.5px;display:block;margin-bottom:4px;}
+    .stat-label{font-size:0.75rem;color:var(--text-3);font-weight:500;letter-spacing:0.5px;}
+    .testimonial{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:22px 24px;}
+    .testi-text{font-size:0.88rem;color:var(--text-2);line-height:1.7;font-style:italic;margin-bottom:16px;}
+    .testi-author{display:flex;align-items:center;gap:12px;}
+    .testi-av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#1a6b5a,#0d3d31);display:flex;align-items:center;justify-content:center;font-family:'Clash Display',sans-serif;font-size:0.65rem;font-weight:800;color:var(--accent);border:1.5px solid var(--accent-glow);flex-shrink:0;}
+    .testi-name{font-size:0.85rem;font-weight:700;color:var(--text);}
+    .testi-role{font-size:0.72rem;color:var(--text-3);margin-top:2px;}
+
+    .right-panel{display:flex;flex-direction:column;justify-content:center;align-items:center;padding:100px 64px 80px;background:var(--bg);}
+    .auth-box{width:100%;max-width:420px;}
+    .auth-tabs{display:flex;background:var(--bg-2);border:1px solid var(--border);border-radius:12px;padding:4px;gap:4px;margin-bottom:32px;}
+    .auth-tab{flex:1;font-family:'Clash Display',sans-serif;font-weight:700;font-size:0.875rem;padding:10px;border-radius:9px;border:none;background:transparent;color:var(--text-2);cursor:pointer;transition:all var(--transition);}
+    .auth-tab.active{background:var(--accent);color:#04100a;box-shadow:0 2px 12px var(--accent-glow);}
+
+    .form-panel{display:none;animation:fadeInUp 0.4s ease both;}
+    .form-panel.active{display:block;}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+    .form-title{font-size:1.6rem;font-weight:800;color:var(--text);letter-spacing:-0.5px;margin-bottom:8px;}
+    .form-sub{font-size:0.875rem;color:var(--text-2);margin-bottom:28px;line-height:1.6;}
+    .form-sub a{color:var(--accent);font-weight:600;cursor:pointer;}
+    .social-btns{display:flex;gap:10px;margin-bottom:24px;}
+    .social-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--input-bg);border:1.5px solid var(--border);border-radius:10px;padding:11px;cursor:pointer;font-family:'Satoshi',sans-serif;font-size:0.82rem;font-weight:600;color:var(--text-2);transition:all var(--transition);}
+    .social-btn:hover{border-color:var(--border-hover);color:var(--text);}
+    .or-divider{display:flex;align-items:center;gap:12px;margin-bottom:24px;}
+    .or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:var(--border);}
+    .or-divider span{font-size:0.78rem;color:var(--text-3);font-weight:500;white-space:nowrap;}
+    .form-group{margin-bottom:16px;position:relative;}
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    .form-label{display:block;font-size:0.78rem;font-weight:600;letter-spacing:0.4px;color:var(--text-2);margin-bottom:8px;font-family:'Clash Display',sans-serif;}
+    .form-input{width:100%;background:var(--input-bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;font-family:'Satoshi',sans-serif;font-size:0.875rem;color:var(--text);outline:none;transition:all var(--transition);}
+    .form-input::placeholder{color:var(--text-3);}
+    .form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-dim);background:var(--bg-card);}
+    .input-icon-wrap{position:relative;}
+    .input-icon-wrap .form-input{padding-left:42px;}
+    .input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--text-3);pointer-events:none;display:flex;align-items:center;}
+    .input-right{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text-3);cursor:pointer;display:flex;align-items:center;transition:color var(--transition);}
+    .input-right:hover{color:var(--text);}
+
+    .pw-strength{margin-top:8px;}
+    .pw-bars{display:flex;gap:4px;margin-bottom:4px;}
+    .pw-bar{flex:1;height:3px;border-radius:2px;background:var(--border);transition:background 0.3s;}
+    .pw-bar.weak{background:#ff4d4d;}.pw-bar.medium{background:#ffa500;}.pw-bar.strong{background:var(--accent);}
+    .pw-label{font-size:0.72rem;color:var(--text-3);}
+
+    .checkbox-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:22px;}
+    .custom-cb{width:18px;height:18px;border-radius:5px;border:1.5px solid var(--border);background:var(--input-bg);cursor:pointer;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;transition:all var(--transition);}
+    .custom-cb.checked{background:var(--accent);border-color:var(--accent);}
+    .custom-cb.checked svg{display:block;}.custom-cb svg{display:none;color:#04100a;}
+    .checkbox-text{font-size:0.82rem;color:var(--text-2);line-height:1.5;}
+    .checkbox-text a{color:var(--accent);font-weight:600;}
+
+    .forgot-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px;}
+    .forgot-row label{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:0.82rem;color:var(--text-2);}
+    .forgot-link{font-size:0.82rem;color:var(--accent);font-weight:600;transition:opacity var(--transition);}
+    .forgot-link:hover{opacity:0.8;}
+
+    .btn-submit{width:100%;padding:14px;border-radius:10px;border:none;background:var(--accent);color:#04100a;font-family:'Clash Display',sans-serif;font-weight:800;font-size:0.95rem;cursor:pointer;transition:all var(--transition);letter-spacing:0.2px;display:flex;align-items:center;justify-content:center;gap:8px;}
+    .btn-submit:hover{transform:translateY(-1px);box-shadow:0 8px 28px var(--accent-glow);}
+    .btn-submit:active{transform:translateY(0);}
+
+    .role-select{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+    .role-option{border:1.5px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;transition:all var(--transition);display:flex;flex-direction:column;gap:6px;background:var(--input-bg);}
+    .role-option:hover{border-color:var(--border-hover);}
+    .role-option.selected{border-color:var(--accent);background:var(--accent-dim);}
+    .role-icon{color:var(--text-3);transition:color var(--transition);}
+    .role-option.selected .role-icon{color:var(--accent);}
+    .role-name{font-family:'Clash Display',sans-serif;font-weight:700;font-size:0.85rem;color:var(--text);}
+    .role-desc{font-size:0.72rem;color:var(--text-3);}
+
+    .switch-text{text-align:center;font-size:0.82rem;color:var(--text-3);margin-top:24px;}
+    .switch-text a{color:var(--accent);font-weight:600;cursor:pointer;}
+    .switch-text a:hover{text-decoration:underline;}
+
+    .step-indicator{display:flex;align-items:center;gap:8px;margin-bottom:24px;}
+    .step-dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:all var(--transition);}
+    .step-dot.active{background:var(--accent);width:24px;border-radius:4px;}
+    .step-dot.done{background:var(--accent);opacity:0.5;}
+
+    .spinner{width:18px;height:18px;border:2px solid rgba(4,16,10,0.3);border-top-color:#04100a;border-radius:50%;animation:spin 0.8s linear infinite;display:none;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    .success-msg{text-align:center;padding:32px 0;display:none;}
+    .success-icon{width:64px;height:64px;border-radius:50%;background:var(--accent-dim);border:2px solid var(--accent-glow);display:flex;align-items:center;justify-content:center;color:var(--accent);margin:0 auto 20px;animation:scaleIn 0.4s ease;}
+    @keyframes scaleIn{from{transform:scale(0)}to{transform:scale(1)}}
+    .success-title{font-size:1.4rem;font-weight:800;color:var(--text);margin-bottom:8px;}
+    .success-sub{font-size:0.875rem;color:var(--text-2);line-height:1.6;}
+
+    @media(max-width:900px){.page-wrap{grid-template-columns:1fr;}.left-panel{display:none;}.right-panel{padding:100px 32px 60px;}}
+    @media(max-width:480px){.right-panel{padding:90px 20px 60px;}.nav-links{display:none;}.social-btns{flex-direction:column;}.form-row{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+
+  <nav class="nav" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">Skillistan</a>
+      <div class="nav-right">
+        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+          <span class="theme-icon sun"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+          <span class="theme-icon moon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+          <span class="toggle-knob"></span>
+        </button>
+        <a href="courses.html" class="btn-ghost">Browse Courses</a>
+        <a href="#" class="btn-primary" onclick="switchTab('signup');return false;">Join Free</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="page-wrap">
+    <div class="left-panel">
+      <div class="grid-overlay"></div>
+      <div class="panel-orb orb-1"></div>
+      <div class="panel-orb orb-2"></div>
+      <div class="left-content">
+        <span class="panel-badge">THE NEXUS ECOSYSTEM</span>
+        <h2 class="panel-title">Join the Elite<br><span>Builder Network</span></h2>
+        <p class="panel-sub">Access 450+ expert courses, connect with 12k+ global scholars, and hire the talent shaping the next generation of the internet.</p>
+        <div class="stats-row">
+          <div class="stat-card"><span class="stat-val">12k+</span><span class="stat-label">GLOBAL SCHOLARS</span></div>
+          <div class="stat-card"><span class="stat-val">450+</span><span class="stat-label">EXPERT COURSES</span></div>
+          <div class="stat-card"><span class="stat-val">98%</span><span class="stat-label">COMPLETION RATE</span></div>
+          <div class="stat-card"><span class="stat-val">24/7</span><span class="stat-label">ELITE MENTORSHIP</span></div>
+        </div>
+        <div class="testimonial">
+          <p class="testi-text">"Skillistan completely changed my career trajectory. Within 3 months of completing the Web3 course, I landed a contract paying 3x my previous salary."</p>
+          <div class="testi-author">
+            <div class="testi-av">MV</div>
+            <div>
+              <div class="testi-name">Marcus V.</div>
+              <div class="testi-role">Blockchain Engineer · ★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="auth-box">
+        <div class="auth-tabs">
+          <button class="auth-tab active" id="signinTab">Sign In</button>
+          <button class="auth-tab" id="signupTab">Create Account</button>
+        </div>
+
+        <!-- SIGN IN -->
+        <div class="form-panel active" id="signinPanel">
+          <h2 class="form-title">Welcome back</h2>
+          <p class="form-sub">New here? <a onclick="switchTab('signup')">Create a free account →</a></p>
+          <div class="social-btns">
+            <button class="social-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.615 24 12.255 24z"/><path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 0 0 0 10.76l3.98-3.09z"/><path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.64 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
+              Google
+            </button>
+            <button class="social-btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.365 1.43c0 1.14-.493 2.27-1.177 3.08-.744.9-1.99 1.57-2.987 1.57-.12 0-.23-.02-.3-.03-.01-.06-.04-.22-.04-.39 0-1.15.572-2.27 1.206-2.98.804-.94 2.142-1.64 3.248-1.68.03.13.05.28.05.43zm4.565 15.71c-.03.07-.463 1.58-1.518 3.12-.945 1.34-1.94 2.71-3.43 2.71-1.517 0-1.9-.88-3.63-.88-1.698 0-2.302.91-3.67.91-1.377 0-2.332-1.26-3.428-2.53C1.333 19.01 0 16.08 0 13.29c0-4.55 2.966-6.96 5.873-6.96 1.498 0 2.906.91 3.79.91.985 0 2.546-1.01 4.295-1.01.65 0 2.53.08 3.873 1.93l-.168.11z"/></svg>
+              Apple
+            </button>
+          </div>
+          <div class="or-divider"><span>or continue with email</span></div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <div class="input-icon-wrap">
+              <span class="input-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+              <input type="email" class="form-input" placeholder="you@example.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <div class="input-icon-wrap">
+              <span class="input-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+              <input type="password" class="form-input" id="loginPw" placeholder="••••••••" />
+              <span class="input-right" onclick="togglePw('loginPw',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+            </div>
+          </div>
+          <div class="forgot-row">
+            <label>
+              <div class="custom-cb" id="rememberCb" onclick="toggleCb('rememberCb')">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              Remember me
+            </label>
+            <a href="#" class="forgot-link">Forgot password?</a>
+          </div>
+          <button class="btn-submit" onclick="handleSignIn(this)">
+            <span>Sign In to Nexus</span>
+            <div class="spinner" id="signinSpinner"></div>
+          </button>
+          <div class="success-msg" id="signinSuccess">
+            <div class="success-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+            <div class="success-title">Signed in!</div>
+            <p class="success-sub">Welcome back. <a href="courses.html" style="color:var(--accent);font-weight:600;">Go to Academy →</a></p>
+          </div>
+          <p class="switch-text">Don't have an account? <a onclick="switchTab('signup')">Join for free →</a></p>
+        </div>
+
+        <!-- SIGN UP -->
+        <div class="form-panel" id="signupPanel">
+          <div class="step-indicator">
+            <div class="step-dot active" id="dot1"></div>
+            <div class="step-dot" id="dot2"></div>
+            <div class="step-dot" id="dot3"></div>
+          </div>
+
+          <div id="step1">
+            <h2 class="form-title">Create account</h2>
+            <p class="form-sub">Already a member? <a onclick="switchTab('signin')">Sign in →</a></p>
+            <div class="social-btns">
+              <button class="social-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M23.745 12.27c0-.79-.07-1.54-.19-2.27h-11.3v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/><path fill="#34A853" d="M12.255 24c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-3.13 0-5.78-2.11-6.73-4.96h-3.98v3.09C3.515 21.3 7.615 24 12.255 24z"/><path fill="#FBBC05" d="M5.525 14.29c-.25-.72-.38-1.49-.38-2.29s.14-1.57.38-2.29V6.62h-3.98a11.86 11.86 0 0 0 0 10.76l3.98-3.09z"/><path fill="#EA4335" d="M12.255 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C18.205 1.19 15.495 0 12.255 0c-4.64 0-8.74 2.7-10.71 6.62l3.98 3.09c.95-2.85 3.6-4.96 6.73-4.96z"/></svg>
+                Continue with Google
+              </button>
+            </div>
+            <div class="or-divider"><span>or with email</span></div>
+            <div class="form-row">
+              <div class="form-group"><label class="form-label">First Name</label><input type="text" class="form-input" placeholder="Ahmad" /></div>
+              <div class="form-group"><label class="form-label">Last Name</label><input type="text" class="form-input" placeholder="Asif" /></div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span>
+                <input type="email" class="form-input" placeholder="you@example.com" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Password</label>
+              <div class="input-icon-wrap">
+                <span class="input-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span>
+                <input type="password" class="form-input" id="signupPw" placeholder="Create a strong password" oninput="checkPwStrength(this.value)" />
+                <span class="input-right" onclick="togglePw('signupPw',this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></span>
+              </div>
+              <div class="pw-strength" id="pwStrength" style="display:none">
+                <div class="pw-bars"><div class="pw-bar" id="bar1"></div><div class="pw-bar" id="bar2"></div><div class="pw-bar" id="bar3"></div><div class="pw-bar" id="bar4"></div></div>
+                <span class="pw-label" id="pwLabel"></span>
+              </div>
+            </div>
+            <button class="btn-submit" style="margin-bottom:0" onclick="goStep(2)">Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+          </div>
+
+          <div id="step2" style="display:none">
+            <h2 class="form-title">You are…</h2>
+            <p class="form-sub">Help us personalise your experience on Skillistan.</p>
+            <div class="role-select">
+              <div class="role-option selected" id="role-learner" onclick="selectRole('learner')">
+                <span class="role-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
+                <span class="role-name">A Learner</span><span class="role-desc">I want to enroll in courses</span>
+              </div>
+              <div class="role-option" id="role-talent" onclick="selectRole('talent')">
+                <span class="role-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+                <span class="role-name">Freelancer</span><span class="role-desc">I want to offer services</span>
+              </div>
+              <div class="role-option" id="role-business" onclick="selectRole('business')">
+                <span class="role-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span>
+                <span class="role-name">Business</span><span class="role-desc">I want to hire talent</span>
+              </div>
+              <div class="role-option" id="role-instructor" onclick="selectRole('instructor')">
+                <span class="role-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg></span>
+                <span class="role-name">Instructor</span><span class="role-desc">I want to teach courses</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px">
+              <button class="btn-submit" style="background:var(--bg-2);color:var(--text-2);border:1.5px solid var(--border);flex:0 0 auto;width:auto;padding:14px 20px" onclick="goStep(1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+              <button class="btn-submit" onclick="goStep(3)">Continue <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+            </div>
+          </div>
+
+          <div id="step3" style="display:none">
+            <h2 class="form-title">Almost done!</h2>
+            <p class="form-sub">Agree to the terms and join the Nexus.</p>
+            <div class="checkbox-row" onclick="toggleCb('termsCb')" style="cursor:pointer">
+              <div class="custom-cb" id="termsCb"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="checkbox-text">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> of Skillistan Nexus.</span>
+            </div>
+            <div class="checkbox-row" onclick="toggleCb('marketCb')" style="cursor:pointer">
+              <div class="custom-cb" id="marketCb"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <span class="checkbox-text">Send me course updates and exclusive Nexus offers via email.</span>
+            </div>
+            <div style="display:flex;gap:10px">
+              <button class="btn-submit" style="background:var(--bg-2);color:var(--text-2);border:1.5px solid var(--border);flex:0 0 auto;width:auto;padding:14px 20px" onclick="goStep(2)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 12H5M12 5l-7 7 7 7"/></svg></button>
+              <button class="btn-submit" onclick="handleSignUp(this)">
+                <span>Join Skillistan</span>
+                <div class="spinner" id="signupSpinner"></div>
+              </button>
+            </div>
+            <div class="success-msg" id="signupSuccess">
+              <div class="success-icon"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg></div>
+              <div class="success-title">Welcome to the Nexus!</div>
+              <p class="success-sub">Your account is ready. <a href="courses.html" style="color:var(--accent);font-weight:600;">Start learning →</a></p>
+            </div>
+          </div>
+          <p class="switch-text">Already have an account? <a onclick="switchTab('signin')">Sign in →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const html = document.documentElement;
+    const saved = localStorage.getItem('skillistan-theme') || 'dark';
+    html.setAttribute('data-theme', saved);
+    document.getElementById('themeToggle').addEventListener('click', () => {
+      const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', next);
+      localStorage.setItem('skillistan-theme', next);
+    });
+
+    // Auto-open signup if #hire in URL
+    if (location.hash === '#hire') switchTab('signup');
+
+    function switchTab(which) {
+      const signinTab = document.getElementById('signinTab');
+      const signupTab = document.getElementById('signupTab');
+      const signinPanel = document.getElementById('signinPanel');
+      const signupPanel = document.getElementById('signupPanel');
+      if (which === 'signin') {
+        signinTab.classList.add('active'); signupTab.classList.remove('active');
+        signinPanel.classList.add('active'); signupPanel.classList.remove('active');
+      } else {
+        signupTab.classList.add('active'); signinTab.classList.remove('active');
+        signupPanel.classList.add('active'); signinPanel.classList.remove('active');
+      }
+    }
+    document.getElementById('signinTab').addEventListener('click', () => switchTab('signin'));
+    document.getElementById('signupTab').addEventListener('click', () => switchTab('signup'));
+
+    function togglePw(id) {
+      const inp = document.getElementById(id);
+      inp.type = inp.type === 'password' ? 'text' : 'password';
+    }
+    function toggleCb(id) {
+      document.getElementById(id).classList.toggle('checked');
+    }
+    function checkPwStrength(pw) {
+      const bars = [document.getElementById('bar1'),document.getElementById('bar2'),document.getElementById('bar3'),document.getElementById('bar4')];
+      const label = document.getElementById('pwLabel');
+      const wrap = document.getElementById('pwStrength');
+      if (!pw) { wrap.style.display='none'; return; }
+      wrap.style.display='block';
+      let score = 0;
+      if (pw.length >= 8) score++;
+      if (/[A-Z]/.test(pw)) score++;
+      if (/[0-9]/.test(pw)) score++;
+      if (/[^A-Za-z0-9]/.test(pw)) score++;
+      const cls = score <= 1 ? 'weak' : score <= 2 ? 'medium' : 'strong';
+      const labels = ['','Weak','Fair','Good','Strong'];
+      bars.forEach((b,i) => { b.className='pw-bar'; if(i<score) b.classList.add(cls); });
+      label.textContent = labels[score] || '';
+    }
+    function selectRole(r) {
+      ['learner','talent','business','instructor'].forEach(id => {
+        document.getElementById('role-'+id).classList.remove('selected');
+      });
+      document.getElementById('role-'+r).classList.add('selected');
+    }
+    let currentStep = 1;
+    function goStep(n) {
+      document.getElementById('step'+currentStep).style.display='none';
+      document.getElementById('step'+n).style.display='block';
+      ['dot1','dot2','dot3'].forEach((id,i)=>{
+        const dot=document.getElementById(id);
+        dot.classList.remove('active','done');
+        if(i+1===n) dot.classList.add('active');
+        else if(i+1<n) dot.classList.add('done');
+      });
+      currentStep=n;
+    }
+    function handleSignIn(btn) {
+      const spinner = document.getElementById('signinSpinner');
+      btn.querySelector('span').style.display='none';
+      spinner.style.display='block';
+      btn.disabled=true;
+      setTimeout(()=>{ btn.style.display='none'; document.getElementById('signinSuccess').style.display='block'; },1800);
+    }
+    function handleSignUp(btn) {
+      const spinner = document.getElementById('signupSpinner');
+      btn.querySelector('span').style.display='none';
+      spinner.style.display='block';
+      btn.disabled=true;
+      setTimeout(()=>{ btn.style.display='none'; document.getElementById('signupSuccess').style.display='block'; },1800);
+    }
+  </script>
+</body>
+</html>
