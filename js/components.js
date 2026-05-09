@@ -23,7 +23,7 @@
     <ul class="nav-links">
       <li><a href="index.html"   class="nav-link">Home</a></li>
       <li><a href="courses.html" class="nav-link">Academy</a></li>
-      <li><a href="index.html#services" class="nav-link">Services</a></li>
+      <li><a href="skillistan-services.html" class="nav-link">Services</a></li>
       <li><a href="about.html"   class="nav-link">About Us</a></li>
     </ul>
     <div class="nav-right">
