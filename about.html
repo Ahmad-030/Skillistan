@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Us — Skillistan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Clash+Display:wght@400;500;600;700;800&family=Satoshi:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+  <style>
+    :root {
+      --bg: #0b0e13; --bg-card: #111520; --bg-card-hover: #161c2a;
+      --bg-nav: rgba(11,14,19,0.85); --border: rgba(255,255,255,0.07);
+      --border-hover: rgba(255,255,255,0.14); --text-primary: #f0f0ef;
+      --text-secondary: #8a8fa8; --text-muted: #555a70;
+      --accent-green: #1dba8a; --accent-green-dim: rgba(29,186,138,0.12);
+      --accent-green-glow: rgba(29,186,138,0.25); --accent-purple: #7c6af7;
+      --accent-purple-dim: rgba(124,106,247,0.12);
+      --btn-primary-bg: #1dba8a; --btn-primary-text: #021a10;
+      --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px; --radius-xl: 24px;
+      --font-display: 'Clash Display', sans-serif; --font-body: 'Satoshi', sans-serif;
+      --nav-h: 68px;
+    }
+    [data-theme="light"] {
+      --bg: #f5f6fa; --bg-card: #ffffff; --bg-card-hover: #f0f2f8;
+      --bg-nav: rgba(245,246,250,0.9); --border: rgba(0,0,0,0.07);
+      --border-hover: rgba(0,0,0,0.14); --text-primary: #0d0f17;
+      --text-secondary: #4e5268; --text-muted: #9a9eb5;
+      --accent-green: #0fa370; --accent-green-dim: rgba(15,163,112,0.1);
+      --accent-green-glow: rgba(15,163,112,0.2); --accent-purple: #6557e8;
+      --accent-purple-dim: rgba(101,87,232,0.1);
+      --btn-primary-bg: #0fa370; --btn-primary-text: #ffffff;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg); color: var(--text-primary);
+      font-family: var(--font-body); font-size: 16px; line-height: 1.7;
+      -webkit-font-smoothing: antialiased; overflow-x: hidden;
+    }
+
+    /* ── UTILS ── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section { padding: 100px 0; }
+    .section-header { margin-bottom: 60px; }
+    .section-header.centered { text-align: center; }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(26px,4vw,42px);
+      font-weight: 800; letter-spacing: -1px; color: var(--text-primary);
+      line-height: 1.1; margin-bottom: 12px;
+    }
+    .section-sub { font-size: 16px; color: var(--text-secondary); font-weight: 300; max-width: 540px; line-height: 1.7; }
+    .section-header.centered .section-sub { margin: 0 auto; }
+    .eyebrow {
+      display: inline-block; font-family: var(--font-display); font-size: 10px; font-weight: 700;
+      letter-spacing: 3px; color: var(--accent-green); text-transform: uppercase; margin-bottom: 16px;
+    }
+
+    /* ── BUTTONS ── */
+    .btn-primary {
+      font-family: var(--font-body); font-size: 14px; font-weight: 500;
+      color: var(--btn-primary-text); background: var(--btn-primary-bg);
+      text-decoration: none; padding: 8px 18px; border-radius: var(--radius-sm);
+      border: none; cursor: pointer; transition: opacity 0.2s, transform 0.15s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary.btn-lg { padding: 13px 28px; font-size: 15px; border-radius: var(--radius-md); }
+    .btn-ghost-lg {
+      font-size: 15px; font-weight: 400; color: var(--text-secondary); text-decoration: none;
+      padding: 13px 28px; border-radius: var(--radius-md); border: 1px solid var(--border-hover);
+      transition: all 0.2s; display: inline-flex; align-items: center;
+    }
+    .btn-ghost-lg:hover { color: var(--text-primary); border-color: var(--accent-green); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(32px); transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-left { opacity: 0; transform: translateX(-32px); transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal-left.visible { opacity: 1; transform: translateX(0); }
+    .reveal-right { opacity: 0; transform: translateX(32px); transition: opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1); }
+    .reveal-right.visible { opacity: 1; transform: translateX(0); }
+
+    /* ════════════════════════════════
+       HERO
+    ════════════════════════════════ */
+    .about-hero {
+      position: relative; overflow: hidden;
+      min-height: 100vh; display: flex; align-items: center;
+      padding-top: var(--nav-h);
+    }
+    .hero-grid {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+      background-size: 56px 56px;
+      mask-image: radial-gradient(ellipse 75% 75% at 50% 50%, black 30%, transparent 100%);
+      animation: gridPulse 6s ease-in-out infinite;
+    }
+    @keyframes gridPulse { 0%,100%{opacity:0.5} 50%{opacity:1} }
+    .orb { position: absolute; border-radius: 50%; filter: blur(90px); animation: orbFloat 8s ease-in-out infinite; pointer-events: none; }
+    .orb-1 { width: 600px; height: 600px; background: var(--accent-green-glow); top: -150px; left: -100px; }
+    .orb-2 { width: 400px; height: 400px; background: var(--accent-purple-dim); bottom: -80px; right: -60px; animation-delay: -3s; }
+    .orb-3 { width: 220px; height: 220px; background: rgba(29,186,138,0.07); top: 45%; left: 58%; animation-delay: -5s; }
+    @keyframes orbFloat { 0%,100%{transform:translateY(0) scale(1)} 50%{transform:translateY(-28px) scale(1.04)} }
+
+    .hero-inner {
+      position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-display); font-size: 11px; font-weight: 700; letter-spacing: 2px;
+      color: var(--accent-green); text-transform: uppercase;
+      border: 1px solid var(--accent-green-dim); background: var(--accent-green-dim);
+      padding: 6px 16px; border-radius: 999px; margin-bottom: 28px;
+      opacity: 0; animation: slideUp 0.7s cubic-bezier(.22,1,.36,1) 0.1s forwards;
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent-green); animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .hero-title {
+      font-family: var(--font-display); font-size: clamp(40px,5.5vw,72px); font-weight: 800;
+      line-height: 1.05; letter-spacing: -2.5px; color: var(--text-primary); margin-bottom: 24px;
+      opacity: 0; animation: slideUp 0.7s cubic-bezier(.22,1,.36,1) 0.22s forwards;
+    }
+    .hero-title em { color: var(--accent-green); font-style: normal; display: block; }
+    .hero-sub {
+      font-size: 17px; color: var(--text-secondary); max-width: 480px; font-weight: 300;
+      line-height: 1.75; margin-bottom: 40px;
+      opacity: 0; animation: slideUp 0.7s cubic-bezier(.22,1,.36,1) 0.34s forwards;
+    }
+    .hero-ctas {
+      display: flex; gap: 12px; flex-wrap: wrap;
+      opacity: 0; animation: slideUp 0.7s cubic-bezier(.22,1,.36,1) 0.46s forwards;
+    }
+    .hero-stats {
+      display: flex; gap: 32px; margin-top: 52px; padding-top: 40px;
+      border-top: 1px solid var(--border);
+      opacity: 0; animation: slideUp 0.7s cubic-bezier(.22,1,.36,1) 0.58s forwards;
+    }
+    .hero-stat-num {
+      font-family: var(--font-display); font-size: 26px; font-weight: 800;
+      color: var(--text-primary); letter-spacing: -1px; display: block;
+    }
+    .hero-stat-num span { color: var(--accent-green); }
+    .hero-stat-label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
+
+    /* ── FOUNDER CARD ── */
+    .founder-card-wrap { opacity: 0; animation: slideUp 0.8s cubic-bezier(.22,1,.36,1) 0.4s forwards; }
+    .founder-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 28px;
+      padding: 40px; position: relative; overflow: hidden;
+      transition: border-color 0.4s, transform 0.4s, box-shadow 0.4s;
+    }
+    .founder-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at top left, var(--accent-green-dim), transparent 65%);
+      pointer-events: none;
+    }
+    .founder-card:hover {
+      border-color: rgba(29,186,138,0.35); transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.3), 0 0 40px rgba(29,186,138,0.06);
+    }
+    .founder-tag {
+      display: inline-block; font-family: var(--font-display); font-size: 9px; font-weight: 700;
+      letter-spacing: 2px; text-transform: uppercase;
+      background: var(--accent-green); color: var(--btn-primary-text);
+      padding: 4px 14px; border-radius: 999px; margin-bottom: 28px;
+    }
+    .founder-avatar-wrap { position: relative; width: 96px; height: 96px; margin-bottom: 24px; }
+    .founder-avatar {
+      width: 96px; height: 96px; border-radius: 50%;
+      background: linear-gradient(135deg, #0d3d31, #1a6b5a);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 32px; font-weight: 800;
+      color: var(--accent-green); border: 2px solid rgba(29,186,138,0.4); position: relative; z-index: 1;
+    }
+    .av-ring {
+      position: absolute; border-radius: 50%; border: 1px solid var(--accent-green-dim);
+      animation: ringPulse 3s ease-in-out infinite;
+    }
+    .av-ring-1 { inset: -7px; }
+    .av-ring-2 { inset: -16px; border-color: rgba(29,186,138,0.05); animation-delay: 1s; }
+    @keyframes ringPulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.06);opacity:0.4} }
+    .founder-name {
+      font-family: var(--font-display); font-size: 26px; font-weight: 800;
+      color: var(--text-primary); letter-spacing: -0.5px; margin-bottom: 4px;
+    }
+    .founder-role {
+      font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--accent-green); margin-bottom: 20px; display: block;
+    }
+    .founder-bio { font-size: 14px; color: var(--text-secondary); font-weight: 300; line-height: 1.75; margin-bottom: 24px; }
+    .founder-skills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .founder-skill {
+      font-size: 11px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      color: var(--text-secondary); background: var(--bg); border: 1px solid var(--border);
+      padding: 5px 12px; border-radius: var(--radius-sm); transition: border-color 0.2s, color 0.2s;
+    }
+    .founder-skill:hover { border-color: var(--accent-green); color: var(--accent-green); }
+    .founder-links { display: flex; gap: 10px; }
+    .founder-link {
+      display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 500;
+      color: var(--text-muted); text-decoration: none; padding: 8px 14px;
+      border-radius: var(--radius-sm); border: 1px solid var(--border); transition: all 0.2s;
+    }
+    .founder-link:hover { color: var(--text-primary); border-color: var(--border-hover); background: var(--bg-card-hover); }
+
+    /* ════════════════════════════════
+       MISSION
+    ════════════════════════════════ */
+    .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .mission-heading {
+      font-family: var(--font-display); font-size: clamp(28px,3.5vw,44px); font-weight: 800;
+      letter-spacing: -1.5px; line-height: 1.1; color: var(--text-primary); margin-bottom: 24px;
+    }
+    .mission-heading em { color: var(--accent-green); font-style: normal; }
+    .mission-body p { color: var(--text-secondary); font-weight: 300; margin-bottom: 18px; font-size: 15.5px; line-height: 1.8; }
+    .mission-body strong { color: var(--text-primary); font-weight: 500; }
+
+    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .stat-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 24px; position: relative; overflow: hidden; cursor: default;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .stat-card::before {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+      background: linear-gradient(90deg, var(--accent-green), transparent);
+      transform: scaleX(0); transform-origin: left; transition: transform 0.4s cubic-bezier(.22,1,.36,1);
+    }
+    .stat-card:hover { border-color: rgba(29,186,138,0.25); transform: translateY(-4px); }
+    .stat-card:hover::before { transform: scaleX(1); }
+    .stat-num {
+      font-family: var(--font-display); font-size: 36px; font-weight: 800;
+      color: var(--accent-green); letter-spacing: -1.5px; display: block; line-height: 1; margin-bottom: 8px;
+    }
+    .stat-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 500; }
+    .stat-icon { position: absolute; top: 18px; right: 18px; color: rgba(29,186,138,0.12); }
+
+    /* ════════════════════════════════
+       OFFERINGS
+    ════════════════════════════════ */
+    .offerings-section { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .offerings-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); border-radius: var(--radius-xl); overflow: hidden; }
+    .offering-item {
+      background: var(--bg-card); padding: 44px 32px; position: relative; overflow: hidden;
+      transition: background 0.3s;
+    }
+    .offering-item::after {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--accent-green); transform: scaleX(0); transform-origin: left;
+      transition: transform 0.4s cubic-bezier(.22,1,.36,1);
+    }
+    .offering-item:hover { background: var(--bg-card-hover); }
+    .offering-item:hover::after { transform: scaleX(1); }
+    .offering-num {
+      font-family: var(--font-display); font-size: 48px; font-weight: 800;
+      color: var(--border-hover); letter-spacing: -3px; display: block; margin-bottom: 16px; line-height: 1;
+      transition: color 0.3s;
+    }
+    .offering-item:hover .offering-num { color: rgba(29,186,138,0.2); }
+    .offering-item h3 { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: var(--text-primary); margin-bottom: 12px; }
+    .offering-item p { font-size: 14px; color: var(--text-secondary); font-weight: 300; line-height: 1.75; }
+    .offering-tag {
+      display: inline-block; margin-top: 20px; font-size: 11px; font-weight: 700; letter-spacing: 1.5px;
+      text-transform: uppercase; color: var(--accent-green); background: var(--accent-green-dim);
+      padding: 5px 14px; border-radius: 999px;
+    }
+
+    /* ════════════════════════════════
+       TIMELINE
+    ════════════════════════════════ */
+    .story-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .story-intro p { color: var(--text-secondary); font-weight: 300; margin-bottom: 18px; font-size: 15.5px; line-height: 1.8; }
+    .story-intro strong { color: var(--text-primary); font-weight: 500; }
+
+    .timeline { position: relative; }
+    .timeline::before {
+      content: ''; position: absolute; left: 15px; top: 8px; bottom: 8px; width: 1px;
+      background: linear-gradient(to bottom, var(--accent-green), var(--border) 85%, transparent);
+    }
+    .tl-item {
+      display: flex; gap: 0; margin-bottom: 24px; padding-left: 48px; position: relative;
+      opacity: 0; transform: translateX(-20px);
+      transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1);
+    }
+    .tl-item.visible { opacity: 1; transform: translateX(0); }
+    .tl-dot {
+      position: absolute; left: 9px; top: 18px; width: 14px; height: 14px; border-radius: 50%;
+      background: var(--bg); border: 2px solid var(--accent-green);
+      box-shadow: 0 0 0 4px var(--bg), 0 0 12px var(--accent-green-glow);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .tl-item:hover .tl-dot { background: var(--accent-green); transform: scale(1.3); }
+    .tl-content {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 20px 22px; flex: 1; transition: border-color 0.3s;
+    }
+    .tl-item:hover .tl-content { border-color: rgba(29,186,138,0.25); }
+    .tl-year {
+      font-family: var(--font-display); font-size: 10px; font-weight: 700;
+      letter-spacing: 2px; color: var(--accent-green); text-transform: uppercase; display: block; margin-bottom: 6px;
+    }
+    .tl-content h4 { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+    .tl-content p { font-size: 13.5px; color: var(--text-secondary); font-weight: 300; line-height: 1.7; margin: 0; }
+
+    /* ════════════════════════════════
+       VALUES
+    ════════════════════════════════ */
+    .values-section { background: var(--bg-card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+    .value-card {
+      background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 30px 26px; position: relative; overflow: hidden;
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(.22,1,.36,1), transform 0.6s cubic-bezier(.22,1,.36,1),
+                  border-color 0.3s, background 0.3s;
+    }
+    .value-card.visible { opacity: 1; transform: translateY(0); }
+    .value-card::before {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at top left, var(--accent-green-dim), transparent 60%);
+      opacity: 0; transition: opacity 0.4s;
+    }
+    .value-card:hover { border-color: var(--accent-green); background: var(--bg-card-hover); }
+    .value-card:hover::before { opacity: 1; }
+    .value-icon {
+      width: 46px; height: 46px; border-radius: var(--radius-sm);
+      background: var(--accent-green-dim); display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px; color: var(--accent-green);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .value-card:hover .value-icon { background: rgba(29,186,138,0.2); transform: scale(1.1) rotate(-4deg); }
+    .value-card h3 { font-family: var(--font-display); font-size: 17px; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
+    .value-card p { font-size: 14px; color: var(--text-secondary); font-weight: 300; line-height: 1.7; position: relative; }
+
+    /* ════════════════════════════════
+       CTA
+    ════════════════════════════════ */
+    .cta-section { position: relative; overflow: hidden; padding: 120px 0; text-align: center; }
+    .cta-orb { position: absolute; border-radius: 50%; pointer-events: none; filter: blur(80px); }
+    .cta-orb-1 { width: 500px; height: 500px; background: var(--accent-green-glow); top: -100px; left: 5%; animation: orbFloat 10s ease-in-out infinite; }
+    .cta-orb-2 { width: 350px; height: 350px; background: var(--accent-purple-dim); bottom: -80px; right: 8%; animation: orbFloat 8s ease-in-out 2s infinite; }
+    .cta-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+    .cta-eyebrow {
+      display: inline-block; font-family: var(--font-display); font-size: 11px; font-weight: 700;
+      letter-spacing: 2px; color: var(--accent-green); text-transform: uppercase;
+      border: 1px solid var(--accent-green-dim); background: var(--accent-green-dim);
+      padding: 5px 14px; border-radius: 999px; margin-bottom: 24px;
+    }
+    .cta-inner h2 {
+      font-family: var(--font-display); font-size: clamp(34px,5vw,56px); font-weight: 800;
+      letter-spacing: -2px; color: var(--text-primary); margin-bottom: 16px; line-height: 1.08;
+    }
+    .cta-inner p { font-size: 16px; color: var(--text-secondary); font-weight: 300; margin-bottom: 40px; }
+    .cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+    @keyframes slideUp { from{opacity:0;transform:translateY(28px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .hero-inner { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+      .hero-ctas, .hero-stats { justify-content: center; }
+      .hero-sub { margin: 0 auto 40px; }
+      .founder-card-wrap { max-width: 460px; margin: 0 auto; }
+      .mission-grid, .story-layout { grid-template-columns: 1fr; gap: 48px; }
+      .values-grid { grid-template-columns: 1fr 1fr; }
+      .offerings-grid { grid-template-columns: 1fr; background: transparent; gap: 12px; border-radius: 0; overflow: visible; }
+      .offering-item { border: 1px solid var(--border); border-radius: var(--radius-lg); }
+    }
+    @media (max-width: 600px) {
+      .values-grid { grid-template-columns: 1fr; }
+      .stat-grid { grid-template-columns: 1fr 1fr; }
+      .hero-stats { gap: 20px; flex-wrap: wrap; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── NAV & FOOTER injected by js/components.js ── -->
+
+  <!-- ════════════════════════════════════════
+       HERO
+  ════════════════════════════════════════ -->
+  <section class="about-hero">
+    <div class="hero-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <div class="hero-inner">
+      <!-- LEFT -->
+      <div class="hero-left">
+        <span class="hero-badge">
+          <span class="badge-dot"></span>
+          Our Story
+        </span>
+        <h1 class="hero-title">
+          Where Talent<br/>Meets
+          <em>Opportunity</em>
+        </h1>
+        <p class="hero-sub">
+          Skillistan is Pakistan's premier platform to learn cutting-edge IT skills, hire top-tier professionals, and access world-class digital services — all under one roof.
+        </p>
+        <div class="hero-ctas">
+          <a href="#our-mission" class="btn-primary btn-lg">
+            Explore Our Mission
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+          </a>
+          <a href="courses.html" class="btn-ghost-lg">Browse Courses</a>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat-item">
+            <span class="hero-stat-num"><span>10K</span>+</span>
+            <span class="hero-stat-label">Learners</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num"><span>500</span>+</span>
+            <span class="hero-stat-label">Vetted Pros</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num"><span>98</span>%</span>
+            <span class="hero-stat-label">Satisfaction</span>
+          </div>
+          <div class="hero-stat-item">
+            <span class="hero-stat-num"><span>120</span>+</span>
+            <span class="hero-stat-label">Courses</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Founder Card -->
+      <div class="founder-card-wrap">
+        <div class="founder-card">
+          <span class="founder-tag">Founder &amp; CEO</span>
+          <div class="founder-avatar-wrap">
+            <div class="av-ring av-ring-2"></div>
+            <div class="av-ring av-ring-1"></div>
+            <div class="founder-avatar">A</div>
+          </div>
+          <h2 class="founder-name">Ahmad Asif</h2>
+          <span class="founder-role">Founder, Skillistan</span>
+          <p class="founder-bio">
+            Visionary builder on a mission to bridge the gap between Pakistani IT talent and global opportunity. Ahmad created Skillistan so no skilled developer goes undiscovered — and no learner ever runs out of a path forward.
+          </p>
+          <div class="founder-skills">
+            <span class="founder-skill">Flutter</span>
+            <span class="founder-skill">Web Dev</span>
+            <span class="founder-skill">Product</span>
+            <span class="founder-skill">Leadership</span>
+            <span class="founder-skill">UI/UX</span>
+          </div>
+          <div class="founder-links">
+            <a href="#" class="founder-link">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+            <a href="#" class="founder-link">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       MISSION
+  ════════════════════════════════════════ -->
+  <section class="section" id="our-mission">
+    <div class="container">
+      <div class="mission-grid">
+        <div class="mission-body reveal-left">
+          <span class="eyebrow">Our Mission</span>
+          <h2 class="mission-heading">Built to <em>Empower</em><br/>Every Builder</h2>
+          <p>We started with a simple belief: <strong>the right skill should never be out of reach</strong>. Whether you're a student in Faisalabad looking to master web development, or a startup founder hunting for an expert backend engineer — Skillistan bridges that gap.</p>
+          <p>Our platform combines structured learning, a vetted professional marketplace, and on-demand IT services into one seamless ecosystem. No more switching between fragmented tools and platforms.</p>
+          <p>We believe in <strong>growth without barriers</strong> — for learners, for professionals, and for businesses across Pakistan and beyond.</p>
+        </div>
+        <div class="stat-grid reveal-right">
+          <div class="stat-card">
+            <svg class="stat-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
+            <span class="stat-num">10K+</span>
+            <span class="stat-label">Active Learners</span>
+          </div>
+          <div class="stat-card">
+            <svg class="stat-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            <span class="stat-num">500+</span>
+            <span class="stat-label">Verified Pros</span>
+          </div>
+          <div class="stat-card">
+            <svg class="stat-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            <span class="stat-num">120+</span>
+            <span class="stat-label">Courses Live</span>
+          </div>
+          <div class="stat-card">
+            <svg class="stat-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/></svg>
+            <span class="stat-num">98%</span>
+            <span class="stat-label">Client Satisfaction</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       WHAT WE OFFER
+  ════════════════════════════════════════ -->
+  <section class="section offerings-section">
+    <div class="container">
+      <div class="section-header centered reveal">
+        <h2 class="section-title">What Skillistan Offers</h2>
+        <p class="section-sub">Three powerful pillars that fuel your growth and business.</p>
+      </div>
+      <div class="offerings-grid reveal">
+        <div class="offering-item">
+          <span class="offering-num">01</span>
+          <h3>Learn Skills</h3>
+          <p>Dive into project-based courses taught by industry veterans. From app development and web design to AI integration and SEO — gain skills that command real results.</p>
+          <span class="offering-tag">Academy</span>
+        </div>
+        <div class="offering-item">
+          <span class="offering-num">02</span>
+          <h3>Hire Professionals</h3>
+          <p>Access a curated marketplace of vetted IT specialists ready to deliver exceptional work. Post a project, review proposals, and collaborate with confidence.</p>
+          <span class="offering-tag">Marketplace</span>
+        </div>
+        <div class="offering-item">
+          <span class="offering-num">03</span>
+          <h3>IT Services</h3>
+          <p>Need a complete solution? Our service packages cover everything from custom software development and digital design to AI automation and cloud infrastructure.</p>
+          <span class="offering-tag">Services</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       JOURNEY
+  ════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <div class="story-layout">
+        <div class="story-intro reveal-left">
+          <span class="eyebrow">Our Journey</span>
+          <h2 class="mission-heading" style="margin-bottom:24px;">From Bold Idea<br/>to <em>Growing Platform</em></h2>
+          <p>Skillistan was born from <strong>frustration and vision</strong>. Ahmad saw a recurring problem: talented developers in Pakistan struggled to find quality clients, while businesses abroad couldn't discover them.</p>
+          <p>So he built Skillistan — a name fusing <strong>Skill</strong> with <strong>-istan</strong>, meaning a land or home — to create a home for every person who wants to grow through technology.</p>
+        </div>
+        <div class="timeline">
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-year">2023 — Founded</span>
+              <h4>The idea takes shape</h4>
+              <p>Ahmad launches the initial concept: a platform where Pakistani IT talent connects with global opportunities and local learners upskill affordably.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-year">2024 — Launch</span>
+              <h4>Skillistan goes live</h4>
+              <p>First cohort of learners enroll, the professional marketplace opens, and the first IT service contracts are signed. The community begins to grow.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-year">2025 — Expansion</span>
+              <h4>Scaling the ecosystem</h4>
+              <p>New categories added, AI and automation services launched, and the roster crosses 500 vetted specialists. Client satisfaction holds steady at 98%.</p>
+            </div>
+          </div>
+          <div class="tl-item">
+            <div class="tl-dot"></div>
+            <div class="tl-content">
+              <span class="tl-year">Today — Growing</span>
+              <h4>Building the future of work</h4>
+              <p>10,000+ active members and a vision to become South Asia's go-to platform for IT learning, hiring, and services.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       VALUES
+  ════════════════════════════════════════ -->
+  <section class="section values-section">
+    <div class="container">
+      <div class="section-header centered reveal">
+        <h2 class="section-title">What We Stand For</h2>
+        <p class="section-sub">Principles that guide every decision we make at Skillistan.</p>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <h3>Quality First</h3>
+          <p>Every professional vetted. Every course reviewed. We never compromise on the standard of what Skillistan delivers.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+          <h3>Community Driven</h3>
+          <p>Skillistan thrives because of its people — learners, mentors, and professionals who share knowledge and build together.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg></div>
+          <h3>Accessible Growth</h3>
+          <p>Premium skills and top-tier talent shouldn't only be for large companies. Skillistan democratizes access for everyone.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg></div>
+          <h3>Relentless Innovation</h3>
+          <p>Technology never stops evolving, and neither do we. We constantly expand our catalog to stay ahead of the curve.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><path d="M21 12c0 4.97-4.03 9-9 9S3 16.97 3 12 7.03 3 12 3s9 4.03 9 9z"/></svg></div>
+          <h3>Trust &amp; Transparency</h3>
+          <p>Clear pricing, honest reviews, secure transactions. We build trust through full transparency at every step.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+          <h3>Lifelong Learning</h3>
+          <p>Skills are never finished products. We cultivate a culture where continuous learning is celebrated and rewarded.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════════════
+       CTA
+  ════════════════════════════════════════ -->
+  <section class="cta-section">
+    <div class="cta-orb cta-orb-1"></div>
+    <div class="cta-orb cta-orb-2"></div>
+    <div class="container">
+      <div class="cta-inner reveal">
+        <span class="cta-eyebrow">Join Us</span>
+        <h2>Ready to Start<br/>Your Journey?</h2>
+        <p>Join thousands of learners and professionals already growing with Skillistan.</p>
+        <div class="cta-btns">
+          <a href="auth.html" class="btn-primary btn-lg">Create Free Account</a>
+          <a href="courses.html" class="btn-ghost-lg">Browse Courses</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="js/components.js"></script>
+  <script>
+    /* ── Generic scroll reveal ── */
+    const ro = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); ro.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => ro.observe(el));
+
+    /* ── Timeline stagger ── */
+    const to = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); to.unobserve(e.target); } });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.tl-item').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.13}s`; to.observe(el);
+    });
+
+    /* ── Value cards stagger ── */
+    const vo = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); vo.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.value-card').forEach((el, i) => {
+      el.style.transitionDelay = `${i * 0.08}s`; vo.observe(el);
+    });
+
+    /* ── Animated counter ── */
+    function animCount(el, target, suffix) {
+      let start = null;
+      const run = ts => {
+        if (!start) start = ts;
+        const p = Math.min((ts - start) / 1600, 1);
+        const e = 1 - Math.pow(1 - p, 3);
+        el.textContent = Math.floor(e * target) + suffix;
+        if (p < 1) requestAnimationFrame(run);
+      };
+      requestAnimationFrame(run);
+    }
+    const statData = [{ val:10, s:'K+' }, { val:500, s:'+' }, { val:120, s:'+' }, { val:98, s:'%' }];
+    const co = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('.stat-num').forEach((n, i) => { if (statData[i]) animCount(n, statData[i].val, statData[i].s); });
+          co.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.3 });
+    const sg = document.querySelector('.stat-grid');
+    if (sg) co.observe(sg);
+  </script>
+</body>
+</html>
